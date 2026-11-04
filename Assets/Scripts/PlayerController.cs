@@ -11,17 +11,20 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;         // La capa que define que es "suelo"
     public float groundCheckRadius = 0.2f; // Radio del circulo para detectar el suelo
 
+
     // Componentes y variables privadas
     private Rigidbody2D rb;
     private float horizontalInput;
     private bool isGrounded;
     private bool isFacingRight = true; // Para saber hacia donde mira el personaje
 
+    private Animator animator;
     // Start se llama una vez al inicio
     void Start()
     {
         // Obtenemos el componente Rigidbody2D para poder usar físicas
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update se llama una vez por frame (ideal para inputs)
@@ -31,6 +34,15 @@ public class PlayerController : MonoBehaviour
         // Input.GetAxis("Horizontal") usa las teclas A/D y las flechas izquierda/derecha
         // Devuelve un valor entre -1 (izquierda) y 1 (derecha)
         horizontalInput = Input.GetAxis("Horizontal");
+
+        if (horizontalInput != 0 )
+        {
+            animator.SetBool("isruning", true);
+        }
+        else
+        {
+            animator.SetBool("isruning", false);
+        }
 
         // 2. DETECTAR SALTO
         // Input.GetButtonDown("Jump") detecta la barra espaciadora (por defecto en Unity)
@@ -54,6 +66,7 @@ public class PlayerController : MonoBehaviour
         // Si ese círculo toca algo en la 'groundLayer', isGrounded es true
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
+        animator.SetBool("isjumping" , !isGrounded);
         // 5. APLICAR MOVIMIENTO HORIZONTAL
         // Movemos el Rigidbody cambiando su velocidad (velocity)
         // Mantenemos la velocidad vertical (rb.velocity.y) para que la gravedad y el salto sigan funcionando
