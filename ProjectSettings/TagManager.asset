@@ -41,5 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: platform
+    uniqueID: 3690002549
+    locked: 0
+  - name: props
+    uniqueID: 4110661483
+    locked: 0
+  - name: backgound
+    uniqueID: 1181018389
+    locked: 0
   m_RenderingLayers:
   - Default
